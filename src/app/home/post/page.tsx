@@ -20,26 +20,7 @@ export default function Page() {
 	// const uid: SessionUser | null = session?.user;
 
 	const supabase = createClient();
-
-	const uploadImage = async (imageFile: File) => {
-		const { data, error } = await supabase.storage
-			.from("cats-storage")
-			.upload(`images/${imageFile.name}`, imageFile, {
-			cacheControl: '3600',
-			upsert: false,
-		});
-		const imageUrl = `https://qzioxjzxekxqmpdgowqh.supabase.co/storage/v1/object/public/cats-storage/${data?.path}`;
-		console.log("return url is: ",imageUrl); // 確認済み
 		
-		if (error) {
-			console.error('Error uploading image:', error.message);
-			alert(error.message);
-		} else {
-			console.log('Image uploaded successfully:', data);
-			alert('Image uploaded successfully!!');
-		}
-	};
-
 	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const reader = new FileReader();
 
@@ -54,13 +35,39 @@ export default function Page() {
 		}
 	}
 
-	const handleUpload = () => {
+	const handleUpload = async () => {
 		if (!selectedImage) {
 			alert("Pls set cat images. 🐱");
-		} else {
-			uploadImage(selectedImage);
+			return;
 		}
-		console.log('Uploading image:', selectedImage);
+
+		try {
+			const { data, error: uploadError } = await supabase.storage
+				.from("cats-storage")
+				.upload(`images/${selectedImage.name}`, selectedImage, {
+				cacheControl: '3600',
+				upsert: false,
+			});
+
+		if (uploadError) {
+			console.error('Error uploading image:', uploadError.message);
+			alert(uploadError.message);
+			return;
+		}
+
+		const imageUrl = `https://qzioxjzxekxqmpdgowqh.supabase.co/storage/v1/object/public/cats-storage/${data?.path}`;
+		
+		// DBへの追加成功確認済み 
+		await supabase.from("post_cat").upsert({
+			u_id: "test0000",
+			url: imageUrl,
+		})
+
+		alert("The post was successful!!");
+		} catch (error) {
+			console.error('Error handling upload:', error);
+			alert('An unexpected error occurred.');
+		}
 	};
 
 	if (!session) {
@@ -70,7 +77,6 @@ export default function Page() {
 					<div className="flex flex-col items-center justify-center">ログインが必要です</div>
 
 					<button onClick={() => signIn("google")}>Googleでログイン</button>
-					{/* <button onClick={() => signOut()}>ログアウト</button> */}
 				<Footer />
 			</div>
 		);
