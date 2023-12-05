@@ -1,10 +1,6 @@
 "use client"
 import { useState, useEffect } from 'react';
 import Image from 'next/image'
-import catImage from '../../../public/dummy_cat.jpg'
-import equinox from '../../../public/equinox.jpeg'
-import logo from '../../../public/logo.png'
-
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 
 interface CatImage {
@@ -17,8 +13,7 @@ interface CatImage {
 export default function Vote() {
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [images, setCatImages] = useState<CatImage[]>([]);
-	// const images = [catImage, equinox, logo];
-
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		fetchData();
@@ -26,6 +21,8 @@ export default function Vote() {
 
 	const fetchData = async () => {
 		try {
+			setIsLoading(true);
+
 			const response = await fetch("api/functions/getCats",{
 				method: 'GET',
 			headers: {
@@ -41,6 +38,8 @@ export default function Vote() {
 		}
 		} catch (error) {
 			console.error(error);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -65,7 +64,14 @@ export default function Vote() {
 		<div className="vote-container">
 			<div className='flex items-center justify-cente'>
 				<div className="p-6 bg-gray-800 relative rounded-lg pb-10">
-					<Image src={images.length > 0 ? images[currentIndex].url : ''} alt="this_is_cat"
+
+					{/* 非同期の表示切り替え */}
+					{isLoading && 
+						<div className="flex items-center justify-center text-white w-64 h-56 sm:w-96 sm:h-72 md:w-96 md:h-72 lg:w-96 lg:h-72">Now Loading ...</div>
+					}
+
+					{!isLoading && 
+						<Image src={images.length > 0 ? images[currentIndex].url : ''} alt="this_is_cat"
 						width={
 						images.length > 0
 						? images[currentIndex].width > 256
@@ -82,6 +88,8 @@ export default function Vote() {
 						}
 					className="w-64 h-56 sm:w-96 sm:h-72 md:w-96 md:h-72 lg:w-96 lg:h-72"
 					/>
+					}
+
 					{/* Prev and Next */}
 					<div className='bg-black flex items-center justify-center'>
 						<button onClick={handlePrevClick}
