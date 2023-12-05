@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { update_cats } from '../../basket_cat';
+import { update_cats } from '../../../../utils/basket_cat';
 
 export async function GET(req: Request) {
 	let respons_json: any
