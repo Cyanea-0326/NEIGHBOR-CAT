@@ -1,5 +1,6 @@
 "use client"
 
+import Image from 'next/image';
 import { useState, useEffect, FormEvent } from 'react';
 import Header from "@/app/components/Header";
 import Footer from '@/app/components/Footer';
@@ -85,7 +86,7 @@ export default function Timeline() {
 			<ul className="grid grid-cols-2">
 			{catImages.map((catImage) => (
 				<li key={catImage.index} className="m-2">
-					<img src={catImage.url} alt="Cat" className="w-64 h-auto" />
+					<Image src={catImage.url} alt="Cat" className="w-64 h-auto" />
 				</li>
 			))}
 			</ul>

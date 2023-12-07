@@ -25,11 +25,11 @@ export default function Vote() {
 			const obj = JSON.parse(getData);
 			setCatImages(obj);
 			setIsLoading(false);
-			alert("session obj");
+			console.log("session obj");
 			return ;
 		}
 		if (!getData) {
-			alert("init")
+			console.log("init");
 			fetchData();
 		}
 	},[isLoading]);

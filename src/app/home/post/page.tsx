@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from "react"
+import Image from 'next/image';
 import { useSession } from "next-auth/react";
 import { signIn, signOut } from "next-auth/react";
 import { createClient } from "@/utils/supabase/client";
@@ -99,7 +100,7 @@ export default function Page() {
 				</div>
 				<div className="flex flex-col items-center justify-center space-y-4 p-28 sm:p-32 md:p-32 lg:p-32">
 				{selectedImage && (
-					<img
+					<Image
 					src={URL.createObjectURL(selectedImage)}
 					alt="Selected Preview"
 					className="max-h-40 max-w-40"

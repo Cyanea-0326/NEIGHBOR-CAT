@@ -5,7 +5,7 @@
 
 // import { createClient } from "@/utils/supabase/client";
 
-// export default function Home() {
+ export default function Home() {
 // 	const supabase = createClient();
 
 // 	const handlePush = async () => {
@@ -43,7 +43,8 @@
 // 		}
 // 	}
 
-// return (
+	return (
+		<></>
 // 	<main>
 // 		<div className='flex flex-col items-center justify-center'>
 // 			<Header />
@@ -56,5 +57,5 @@
 // 			<Footer />
 // 		</div>
 // 	</main>
-//   )
-// }
+   )
+}
