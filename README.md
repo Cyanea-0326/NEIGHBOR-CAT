@@ -3,6 +3,23 @@ Project Link: [NEIGHBOR CAT](https://neighbor-hi56abv9c-cyanea-0326.vercel.app/h
 Typescript + Next.js + NextAuth + supabase Project
 
 ### How to use
+Footer  
+左からhome(Voting), Post, Timeline, Profileページへ遷移します。  
+
+##### home(Voting)
+中央に表示されている猫が気に入ったらGoodを押してみてください。  
+Badは猫以外の画像が表示されていたり、マナー違反をしているような画像につけてください。
+
+##### Post
+あなたが撮影した猫の写真を投稿すことができます。  
+初めて訪れた際はログインを要求する画面が表示されています
+
+##### Timeline
+隣人が撮影した素敵な猫の画像を眺めることができます（予定です）  
+画面を下へスクロールすると、新たな画像をリクエストすることができます。
+
+##### Profile
+ログイン・ログアウトや、あなたの情報を確認、編集や削除などできる機能を実装予定です  
 
 ### Scheduled to be implemented
 - Voting
