@@ -1,17 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 
-// const cat_url = [{}];
-
-let lastFetchTime = 0;
-let cat_url: any = [];
 
 export async function update_cats() {
-	const now = Date.now();
+	let cat_url: any[] = [];
 
-	if (now - lastFetchTime >= 12 * 60 * 60 * 1000) {
 		for (let i = 0; i < 3; i++) {
-			try {
+			// try {
 				const response = await fetch("https://api.thecatapi.com/v1/images/search?limit=10",{
 					method: 'GET',
 					headers: {
@@ -20,21 +15,16 @@ export async function update_cats() {
 				});
 				if (response.ok) {
 					const data = await response.json();
-					data.forEach((item: any) => {
-						cat_url.push(item);
-					});
-					
+					cat_url.push(...data);
 				} else {
 					console.error('Failed to fetch data');
 				}
-			} catch (error) {
-				console.error(error);
-			}
+			// } catch (error) {
+			// 	console.error(error);
+			// }
+			console.log(i);
 			await new Promise(resolve => setTimeout(resolve, 2000));
 		};
-		lastFetchTime = now;
-	} else {
-		console.log("timelock now");
-	}
+	console.log("Arraylen is: ", cat_url.length)
 	return (cat_url);
 };

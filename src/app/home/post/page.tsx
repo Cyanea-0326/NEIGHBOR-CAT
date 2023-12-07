@@ -6,12 +6,12 @@ import { createClient } from "@/utils/supabase/client";
 import Header from "@/app/components/Header";
 import Footer from '@/app/components/Footer';
 
-interface SessionUser {
-	name?: string | null | undefined;
-	email?: string | null | undefined;
-	image?: string | null | undefined;
-	id?: string | null | undefined;
-}
+// interface SessionUser {
+// 	name?: string | null | undefined;
+// 	email?: string | null | undefined;
+// 	image?: string | null | undefined;
+// 	id?: string | null | undefined;
+// }
 
 export default function Page() {
 	const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -56,7 +56,7 @@ export default function Page() {
 		}
 
 		const imageUrl = `https://qzioxjzxekxqmpdgowqh.supabase.co/storage/v1/object/public/cats-storage/${data?.path}`;
-		
+
 		// DBへの追加成功確認済み 
 		await supabase.from("post_cat").upsert({
 			u_id: "test0000",
@@ -74,42 +74,61 @@ export default function Page() {
 		return (
 			<div className="flex flex-col items-center justify-center space-y-4">
 				<Header />
-					<div className="flex flex-col items-center justify-center">ログインが必要です</div>
-
-					<button onClick={() => signIn("google")}>Googleでログイン</button>
+					<div className="pt-10 flex flex-col items-center justify-center">You need to logIn!</div>
+					<div className="pt-10 flex flex-col items-center justify-center">
+					What you can do by logging in
+						<br/>
+						<br/>
+					・Cat posts & confirmation<br/>
+					・Vote for the lovery cat🐱
+					</div>
+					<div className="p-32 sm:p-48 md:p-48 lg:p-48">
+						<button className="bg-blue-400 text-white px-4 py-2 rounded"
+						onClick={() => signIn("google")}>Login with Google</button>
+					</div>
 				<Footer />
 			</div>
 		);
 	} else {
 		return (
-			<div className="flex flex-col items-center justify-center space-y-4">
-				<Header />
-			{selectedImage && (
-				<img
-				src={URL.createObjectURL(selectedImage)}
-				alt="Selected Preview"
-				className="max-h-40 max-w-40"
-				/>
-			)}
-			<input
-				type="file"
-				onChange={handleImageChange}
-				className="border border-gray-300 p-2"
-			/>
-			<button
-				onClick={handleUpload}
-				className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-2 px-4 rounded-md transition-all duration-300 hover:from-indigo-500 hover:to-blue-500 hover:shadow-lg focus:outline-none focus:ring focus:border-blue-300"
-			>
-			POST
-			</button>
-				<div className="pt-20">
-					<button 
-					className="bg-red-400 text-white px-4 py-2 rounded"
-					onClick={() => signOut()}>
-					signOut
-					</button>
+			<div>
+				<div className="">
+					<Header />
+				<div className='flex item-center justify-center'>
+					<h1 className="text-2xl font-bold mb-4">Post Cat</h1>
 				</div>
-			<Footer />
+				<div className="flex flex-col items-center justify-center space-y-4 p-28 sm:p-32 md:p-32 lg:p-32">
+				{selectedImage && (
+					<img
+					src={URL.createObjectURL(selectedImage)}
+					alt="Selected Preview"
+					className="max-h-40 max-w-40"
+					/>
+					)}
+				<input
+					type="file"
+					onChange={handleImageChange}
+					className="border border-gray-300 p-2"
+					/>
+				<div className="p-12">
+
+				<button
+					onClick={handleUpload}
+					className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-2 px-4 rounded-md transition-all duration-300 hover:from-indigo-500 hover:to-blue-500 hover:shadow-lg focus:outline-none focus:ring focus:border-blue-300"
+					>
+				POST
+				</button>
+				</div>
+					<div className="pt-20">
+						<button 
+						className="bg-red-400 text-white px-4 py-2 rounded"
+						onClick={() => signOut()}>
+						signOut
+						</button>
+					</div>
+				</div>
+				<Footer />
+			</div>
 		</div>
 		);
 	}

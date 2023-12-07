@@ -29,6 +29,9 @@ import Footer from '@/app/components/Footer';
 interface CatImage {
 	id: string;
 	url: string;
+	good: number;
+	bad: number;
+	index: number;
 }
 
 export default function Timeline() {
@@ -43,16 +46,20 @@ export default function Timeline() {
 		try {
 			const response = await fetch("https://api.thecatapi.com/v1/images/search?limit=10",{
 				method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
-		if (response.ok) {
-			const data = await response.json();
-			setCatImages(data);
-		} else {
-			console.error('Failed to fetch data');
-		}
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+			if (response.ok) {
+				const data = await response.json();
+				const indexed = [];
+				for(let i = 0; i < data.length; i++) {
+					indexed.push({ ...data[i], index: i });
+				}
+				setCatImages(indexed);
+			} else {
+				console.error('Failed to fetch data');
+			}
 		} catch (error) {
 			console.error(error);
 		}
@@ -61,6 +68,7 @@ export default function Timeline() {
 	const handleButtonClick = () => {
 		// ボタンが押されたときにAPIからデータを再取得
 		fetchData();
+		window.scrollTo({ top: 0, behavior: 'smooth' });
 	};
 	
 	// const events = timelineData;
@@ -69,26 +77,21 @@ export default function Timeline() {
 	return (
 		<div className="timeline-container">
 			<Header />
-		<h1 className="text-2xl font-bold mb-4">Timeline</h1>
-		{/* <ul className="timeline">
-		  {events.map(event => (
-			<li key={event.id} className="flex mb-4">
-			<p className="mr-4">{event.date}</p>
-			<p>{event.description}</p>
-			</li>
-		  ))}
-		</ul> */}
+		<div className='flex item-center justify-center '>
+			<h1 className="text-2xl font-bold mb-4">Timeline</h1>
+		</div>
 
-			<div className="flex flex-col items-center justify-center mb-60">
+			<div className="flex flex-col items-center justify-center mb-20">
 			<ul className="grid grid-cols-2">
 			{catImages.map((catImage) => (
-			<li key={catImage.id} className="m-2">
-			<img src={catImage.url} alt="Cat" className="w-64 h-auto" />
-			</li>
+				<li key={catImage.index} className="m-2">
+					<img src={catImage.url} alt="Cat" className="w-64 h-auto" />
+				</li>
 			))}
 			</ul>
-
-			<button onClick={handleButtonClick}>Get Cat Images</button>
+				<div className='pt-8'>
+					<button className='bg-blue-400 text-white px-4 py-2 rounded' onClick={handleButtonClick}>Get Cat Images</button>
+				</div>
 			</div>
 		<Footer />
 		</div>

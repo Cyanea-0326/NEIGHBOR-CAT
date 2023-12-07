@@ -1,6 +1,9 @@
 import Link from 'next/link'
 
-import { HomeIcon, ArrowUpTrayIcon, GlobeAltIcon } from '@heroicons/react/24/solid'
+import { HomeIcon,
+		 ArrowUpTrayIcon,
+		 GlobeAltIcon,
+		 UserIcon } from '@heroicons/react/24/solid'
 
 export default function Footer() {
 
@@ -27,6 +30,9 @@ export default function Footer() {
 				</Link>
 				<Link href="/home/timeline">
 					<GlobeAltIcon className="ms-14 h-12 w-12 text-[#b49c94]" />
+				</Link>
+				<Link href="/home/profile">
+					<UserIcon className="ms-14 h-12 w-12 text-[#b49c94]" />
 				</Link>
 			</div>
 		</div>
