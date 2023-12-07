@@ -4,25 +4,25 @@ Typescript + Next.js + NextAuth + supabase Project
 ### How to use
 
 ### Scheduled to be implemented
--Voting
-	-新たな画像のリクエスト
-	-POSTされた画像が少ない場合Dummyテーブルから取得
+- Voting
+	- 新たな画像のリクエスト
+	- POSTされた画像が少ない場合Dummyテーブルから取得
 
--Post
-	-未定
+- Post
+	- 未定
 
--Timeline
-	-[TheCatApi](https://thecatapi.com/)から、DBデータへ取得先を移行
-	-表示数調整
+- Timeline
+	- [TheCatApi](https://thecatapi.com/)から、DBデータへ取得先を移行
+	- 表示数調整
 
--Profile
-	-POSTの確認、削除
-	-投票の確認
+- Profile
+	- POSTの確認、削除
+	- 投票の確認
 
--whole project
-	-TL用のデータ（画像URLなど）をappサーバー側で定期的に更新
-	-クライアントからの投票をappサーバー側で一時保存、合計の処理をしDB更新のtrafficを抑える
-	-Badが一定数到達/Goodが一定数未満でDeleteクエリの発行を定期実行
+- whole project
+	- TL用のデータ（画像URLなど）をappサーバー側で定期的に更新
+	- クライアントからの投票をappサーバー側で一時保存、合計の処理をしDB更新のtrafficを抑える
+	- Badが一定数到達/Goodが一定数未満でDeleteクエリの発行を定期実行
 
 
 
