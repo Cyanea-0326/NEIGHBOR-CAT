@@ -52,8 +52,11 @@ export default function Vote() {
 					width: 256,
 					height: 256
 				}));
+				// console.log("Response is: ",response);
+
 				const jsonString = JSON.stringify(dataWithDimensions);
 				sessionStorage.setItem('lastTime', jsonString);
+
 				setCatImages(dataWithDimensions);
 			} else {
 				console.error('Failed to fetch data');
